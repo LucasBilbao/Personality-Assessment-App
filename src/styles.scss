@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+@use "./globals.scss" as globals;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  font-size: #{globals.$PX_SIZE}px;
+}
+
+body {
+  min-height: 100dvh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  li {
+    all: unset;
+  }
+}
+
+fieldset {
+  all: unset;
+  legend {
+    all: unset;
+  }
+}
+
+footer {
+  margin-top: auto;
+}
+
+.center {
+  width: 70%;
+  max-width: 1320px;
+  margin: auto;
+}
+
+input {
+  all: unset;
+}
+
+@media screen and (max-width: 1500px) {
+  .center {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  .center {
+    width: 93%;
+  }
+}

@@ -1,0 +1,49 @@
+@use "../../globals.scss" as globals;
+
+:host {
+  @extend %host_placeholder;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: globals.pxToRem(50);
+  margin-bottom: globals.pxToRem(50);
+  width: 100%;
+  h2 {
+    margin: 0 globals.pxToRem(30);
+    text-align: center;
+    @include globals.fontSizing(24, 30);
+
+    & + ul {
+      margin-top: globals.pxToRem(50);
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    max-width: globals.pxToRem(1307);
+    width: 86%;
+    gap: globals.pxToRem(15);
+    margin-bottom: globals.pxToRem(30);
+    &.listed {
+      flex-direction: column;
+      ::ng-deep {
+        mat-card {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    width: 86%;
+
+    button {
+      @include globals.fontSizing(18, 24);
+      padding: globals.pxToRem(24) globals.pxToRem(18);
+    }
+  }
+}

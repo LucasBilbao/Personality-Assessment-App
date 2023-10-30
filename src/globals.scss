@@ -1,0 +1,36 @@
+$PX_SIZE: 16;
+
+@function calcFontSizeInRem($font_size_px) {
+  @return calc($font_size_px / $PX_SIZE);
+}
+
+@function calcLineHeight($font_size_px, $line_height_px) {
+  @return calc($line_height_px / $font_size_px);
+}
+
+@function pxToRem($px_size) {
+  @return #{calc($px_size / $PX_SIZE)}rem;
+}
+
+@mixin fontSizing($font_size_px, $line_height_px) {
+  font-size: #{calcFontSizeInRem($font_size_px)}rem;
+  line-height: calcLineHeight($font_size_px, $line_height_px);
+}
+
+@mixin font($font_size_px, $line_height_px, $font_weight: normal) {
+  font-weight: $font_weight;
+  @include fontSizing($font_size_px, $line_height_px);
+}
+
+%host_placeholder {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-height: 315px) {
+    margin-top: pxToRem(25);
+    align-items: flex-start;
+  }
+}

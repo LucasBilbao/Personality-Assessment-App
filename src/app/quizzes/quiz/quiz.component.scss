@@ -1,0 +1,29 @@
+@use "../../../globals.scss" as globals;
+
+mat-card {
+  width: globals.pxToRem(250);
+  cursor: pointer;
+  overflow: hidden;
+  background: #a3a2a342;
+  user-select: none;
+  transition: all 0.25s 0s ease-in-out;
+
+  &.selected {
+    opacity: 0.5;
+    // filter: blur(globals.pxToRem(5));
+    filter: grayscale(100%);
+    box-shadow: none;
+    transform: scale(0.7);
+    cursor: not-allowed;
+  }
+
+  img {
+    height: globals.pxToRem(300);
+    object-fit: contain;
+  }
+
+  mat-card-header {
+    justify-content: center;
+    padding-bottom: globals.pxToRem(16);
+  }
+}

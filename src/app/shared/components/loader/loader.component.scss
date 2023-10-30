@@ -1,0 +1,5 @@
+@use "../../../../globals.scss" as globals;
+
+:host {
+  @extend %host_placeholder;
+}

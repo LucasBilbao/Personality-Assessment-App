@@ -1,0 +1,16 @@
+<ng-container *ngIf="quizCollection">
+  <h2>{{ quizCollection.question }}</h2>
+  <ul [class.listed]="categories[activeIndex] === 'facebookers'">
+    <li *ngFor="let quiz of quizCollection.data">
+      <paa-quiz
+        [title]="quiz?.title"
+        [imgPath]="quiz?.imgPath"
+        [personalityCode]="quiz?.personalityCode"
+      ></paa-quiz>
+    </li>
+  </ul>
+  <div class="actions">
+    <button mat-stroked-button>წინა</button>
+    <button mat-raised-button color="primary">შემდეგი</button>
+  </div>
+</ng-container>
