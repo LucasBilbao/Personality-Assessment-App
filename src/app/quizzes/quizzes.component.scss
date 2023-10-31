@@ -44,6 +44,11 @@
     button {
       @include globals.fontSizing(18, 24);
       padding: globals.pxToRem(24) globals.pxToRem(18);
+      cursor: pointer;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
   }
 }

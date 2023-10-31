@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { QuizStateFacade } from './store/facades/quiz.facade';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'paa-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'personality-assessment';
+  public isLoading$: Observable<boolean> = this.quizFacade.isLoading$;
+
+  constructor(private quizFacade: QuizStateFacade) {}
 }

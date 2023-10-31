@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { UserInfo } from 'src/app/models/userInfo';
+import { UserInfo } from 'src/app/models/userInfo.interface';
 import { DEFAULT_USER_PARAMS } from '../../utils/constants';
 
 @Injectable({

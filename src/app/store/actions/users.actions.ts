@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { UsersConstants } from '../constants/users.constants';
-import { UserInfo } from 'src/app/models/userInfo';
+import { UserInfo } from 'src/app/models/userInfo.interface';
 
 export const registerUser = createAction(
   UsersConstants.REGISTER_USER,

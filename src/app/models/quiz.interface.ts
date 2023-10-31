@@ -1,5 +1,7 @@
+import { PersonalityCodeType } from './personalityCode.type';
+
 export interface Quiz {
-  personalityCode: string;
+  personalityCode: PersonalityCodeType;
   title?: string;
   imgPath?: string;
 }
