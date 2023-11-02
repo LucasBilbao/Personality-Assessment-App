@@ -1,0 +1,23 @@
+<paa-loader *ngIf="isLoading$ | async"></paa-loader>
+
+<ng-container
+  *ngIf="!(isLoading$ | async) && (personalities$ | async) as personalities"
+>
+  <div class="results_wrapper">
+    <dl>
+      <div class="primary_result">
+        <dt>თქვენი პირველადი ტამპერამენტია:</dt>
+        <dd>{{ personalities[0].title }}</dd>
+      </div>
+      <div class="secondary_result">
+        <dt>თქვენი მეორადი ტამპერამენტია:</dt>
+        <dd>{{ personalities[1].title }}</dd>
+      </div>
+    </dl>
+    <p *ngFor="let personality of personalities">
+      <b>{{ personality.title }}</b> - {{ personality.description }}
+    </p>
+  </div>
+
+  <button mat-raised-button color="warn" (click)="onEnd()">დასრულება</button>
+</ng-container>

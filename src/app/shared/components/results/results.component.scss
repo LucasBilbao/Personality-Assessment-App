@@ -1,0 +1,79 @@
+@use "../../../../globals.scss" as globals;
+
+:host {
+  @extend %host_placeholder;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: globals.pxToRem(75);
+  width: 100%;
+
+  @media screen and (max-height: 315px) {
+    align-items: center;
+  }
+  .results_wrapper {
+    max-width: globals.pxToRem(750);
+    margin: 0 globals.pxToRem(50) globals.pxToRem(50) globals.pxToRem(50);
+
+    @media screen and (max-width: 500px) {
+      margin: 0 globals.pxToRem(25);
+    }
+    dl {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: globals.pxToRem(500);
+      margin: auto;
+      div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        dt,
+        dd {
+          display: inline-block;
+          width: fit-content;
+        }
+
+        dt {
+          @include globals.fontSizing(18, 22);
+          margin-right: globals.pxToRem(5);
+          @media screen and (max-width: 600px) {
+            @include globals.fontSizing(16, 22);
+          }
+        }
+
+        dd {
+          @include globals.fontSizing(20, 24);
+          color: red;
+          @media screen and (max-width: 600px) {
+            @include globals.fontSizing(18, 22);
+          }
+        }
+
+        & + div {
+          margin-top: globals.pxToRem(5);
+        }
+
+        &:last-of-type {
+          margin-bottom: globals.pxToRem(25);
+        }
+      }
+    }
+
+    p {
+      @include globals.fontSizing(18, 22);
+      @media screen and (max-width: 600px) {
+        @include globals.fontSizing(16, 20);
+      }
+
+      & + p {
+        margin-top: globals.pxToRem(15);
+      }
+      b {
+        color: red;
+      }
+    }
+  }
+}

@@ -14,8 +14,18 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ShowPasswordDirective } from './directives/show-password/show-password.directive';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
+import { ThanksComponent } from './components/thanks/thanks.component';
+import { LoginComponent } from './components/login/login.component';
+import { ResultsComponent } from './components/results/results.component';
 
-const components = [LoaderComponent, SignupComponent, DisclaimerComponent];
+const components = [
+  LoaderComponent,
+  SignupComponent,
+  DisclaimerComponent,
+  ThanksComponent,
+  LoginComponent,
+  ResultsComponent,
+];
 
 const materialModules = [
   MatProgressSpinnerModule,

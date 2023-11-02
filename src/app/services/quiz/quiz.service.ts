@@ -5,6 +5,8 @@ import { PersonalityCodeType } from 'src/app/models/personalityCode.type';
 import { QuizCollection } from 'src/app/models/quiz.interface';
 import { QuizCategoryType } from 'src/app/models/quizCategory.type';
 import { Selections } from 'src/app/models/selections.type';
+import { UserService } from '../user/user.service';
+import { DEFAULT_RESULTS } from 'src/app/utils/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,27 +19,12 @@ export class QuizService {
     'celebrities',
     'ornaments',
   ];
-  private results: { [key: string]: number } = {
-    r1: 0,
-    r2: 0,
-    r3: 0,
-    r4: 0,
-    r5: 0,
-    r6: 0,
-    r7: 0,
-    r8: 0,
-    r9: 0,
-    r10: 0,
-    r11: 0,
-    r12: 0,
-    r13: 0,
-    r14: 0,
-    r15: 0,
-    r16: 0,
-  };
+  private results: {
+    [key: string]: { minValue: number; timesChosen: number };
+  } = DEFAULT_RESULTS;
   private selections!: Selections;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   public getQuizCollection(
     category: QuizCategoryType
@@ -56,15 +43,26 @@ export class QuizService {
     sortedResultSubArrays.sort((a, b) => a[0][1] - b[0][1]);
     sortedResultSubArrays.reverse();
 
-    const resultsSortedByValueAndSelectionOrder: [string, number][] =
+    this.getSubArraysByTimesChosen(sortedResultSubArrays);
+
+    const sortedResultSubArraysByTimesChosen = this.getSubArraysByTimesChosen(
       sortedResultSubArrays
+    );
+
+    const resultsSortedByValueAndSelectionOrder: [string, number, number][] =
+      sortedResultSubArraysByTimesChosen
         .map(this.sortResultsBySelectionOrder.bind(this))
         .flat(1);
 
-    const personalities = [
-      resultsSortedByValueAndSelectionOrder[0][0],
-      resultsSortedByValueAndSelectionOrder[1][0],
+    const [firstPersonality, secondPersonality] =
+      resultsSortedByValueAndSelectionOrder;
+
+    this.userService.userInfo.personalities = [
+      firstPersonality[0] as PersonalityCodeType,
+      secondPersonality[0] as PersonalityCodeType,
     ];
+
+    this.userService.publishUser();
   }
 
   private resultsGenerator(): void {
@@ -80,27 +78,32 @@ export class QuizService {
       });
 
       if (resultArr.length === 0) {
-        this.results[pCode] = 0;
+        this.results[pCode] = { minValue: 0, timesChosen: 0 };
         return;
       }
-      this.results[pCode] = Math.min(...resultArr);
+      this.results[pCode] = {
+        minValue: Math.min(...resultArr),
+        timesChosen: resultArr.filter((result) => result > 0).length,
+      };
     });
   }
 
-  private sortResultsByValue(): [string, number][] {
-    const values = Object.entries(this.results);
-    values.sort(([_1, a], [_2, b]) => a - b);
+  private sortResultsByValue(): [string, number, number][] {
+    const values: [string, number, number][] = Object.entries(this.results).map(
+      ([code, result]) => [code, result.minValue, result.timesChosen]
+    );
+    values.sort(([_1, a, _2], [_3, b, _4]) => a - b);
     values.reverse();
 
     return [...values];
   }
 
   private getSubArraysByValues(
-    resultsSortedByValue: [string, number][]
-  ): [string, number][][] {
+    resultsSortedByValue: [string, number, number][]
+  ): [string, number, number][][] {
     const subArrays = resultsSortedByValue.reduce(
-      (groups: { [key: number]: [string, number][] }, result) => {
-        const group: [string, number][] = groups[result[1]] || [];
+      (groups: { [key: number]: [string, number, number][] }, result) => {
+        const group: [string, number, number][] = groups[result[1]] || [];
         group.push(result);
         groups[result[1]] = group;
         return groups;
@@ -110,9 +113,33 @@ export class QuizService {
     return Object.values(subArrays);
   }
 
+  private getSubArraysByTimesChosen(
+    resultsSortedByValue: [string, number, number][][]
+  ): [string, number, number][][][] {
+    const finalProduct: [string, number, number][][][] = [];
+    resultsSortedByValue.forEach((item) => {
+      const subArrays = item.reduce(
+        (
+          groups: { [key: number]: [string, number, number][] },
+          result: [string, number, number]
+        ) => {
+          const group: [string, number, number][] = groups[result[2]] || [];
+          group.push(result);
+          groups[result[2]] = group;
+          return groups;
+        },
+        {}
+      );
+      const reversed = Object.values(subArrays);
+      reversed.reverse();
+      finalProduct.push(reversed);
+    });
+    return finalProduct;
+  }
+
   private sortResultsBySelectionOrder(
-    sortedResultSubArray: [string, number][]
-  ): [string, number][] {
+    sortedResultSubArray: [string, number, number][][]
+  ): [string, number, number][] {
     const exists: { [key: string]: boolean } = {};
     const selectedOrderNoDuplicates = this.categories
       .map((category) => this.selections[category])
@@ -125,7 +152,9 @@ export class QuizService {
         return true;
       });
 
-    const unorderedPCodes = sortedResultSubArray.map((item) => item[0]);
+    const unorderedPCodes = sortedResultSubArray
+      .flat(1)
+      .map((inner) => inner[0]);
 
     const sortedBySelectionOrder: string[] = [];
     selectedOrderNoDuplicates.forEach((item) => {
@@ -135,9 +164,11 @@ export class QuizService {
       sortedBySelectionOrder.push(item as string);
     });
 
-    const finalProduct: [string, number][] = [];
+    const finalProduct: [string, number, number][] = [];
     sortedBySelectionOrder.forEach((item) => {
-      const found = sortedResultSubArray.find((result) => result[0] === item);
+      const found = sortedResultSubArray
+        .flat(1)
+        .find((result) => result[0] === item);
       if (found) {
         finalProduct.push(found);
       }

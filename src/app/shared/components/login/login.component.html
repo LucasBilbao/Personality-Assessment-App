@@ -1,8 +1,4 @@
-<form
-  [formGroup]="registrationForm"
-  #formControl="ngForm"
-  (submit)="onSignUp()"
->
+<form [formGroup]="loginForm" #formControl="ngForm" (submit)="signIn()">
   <mat-form-field>
     <mat-label>Username</mat-label>
     <input type="text" matInput formControlName="userName" />
@@ -35,43 +31,15 @@
       Password is <strong>required</strong>
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Repeat password</mat-label>
-    <input
-      type="password"
-      matInput
-      appPasswordShown
-      #repeatPasswordInput="appPassword"
-      formControlName="repeatPassword"
-    />
-    <button
-      matSuffix
-      mat-icon-button
-      type="button"
-      (click)="repeatPasswordInput.toggleInputType()"
-    >
-      <mat-icon
-        [fontIcon]="
-          repeatPasswordInput.isPasswordShown ? 'visibility' : 'visibility_off'
-        "
-      ></mat-icon>
-    </button>
-    <mat-error *ngIf="repeatPassword.hasError('required')">
-      Repeat password is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">
-    Passwords must strong match.
-  </mat-error>
   <button
     mat-raised-button
     color="primary"
     type="submit"
     [disabled]="formControl.invalid"
   >
-    Sign Up
-  </button>
-  <button mat-button type="button" color="primary" (click)="goToLogin()">
     Login
+  </button>
+  <button mat-button type="button" color="primary" (click)="goToRegistration()">
+    Register
   </button>
 </form>
