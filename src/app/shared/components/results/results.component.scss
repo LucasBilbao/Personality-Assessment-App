@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-top: globals.pxToRem(75);
+  margin-bottom: globals.pxToRem(50);
   width: 100%;
 
   @media screen and (max-height: 315px) {
