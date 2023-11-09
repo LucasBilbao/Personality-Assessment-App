@@ -5,14 +5,24 @@
 >
   <div class="results_wrapper">
     <dl>
-      <div class="primary_result">
-        <dt>თქვენი პირველადი ტამპერამენტია:</dt>
-        <dd>{{ personalities[0].title }}</dd>
-      </div>
-      <div class="secondary_result">
-        <dt>თქვენი მეორადი ტამპერამენტია:</dt>
-        <dd>{{ personalities[1].title }}</dd>
-      </div>
+      <ng-container *ngFor="let personality of personalities; index as i">
+        <div>
+          <dt>თქვენი პირველადი ტამპერამენტია:</dt>
+          <dd>{{ personality.title }}</dd>
+        </div>
+        <div>
+          <dt>დასაჯეროების კოეფიციენტი:</dt>
+          <dd>{{ userPersonalities[i].coefficient }}</dd>
+        </div>
+        <div>
+          <dt>ტამპერამენტი აირჩიეთ:</dt>
+          <dd>
+            {{ userPersonalities[i].chosenTimes
+            }}{{ userPersonalities[i].chosenTimes !== 1 ? "-ჯერ" : "-ხელ" }}
+          </dd>
+        </div>
+        <hr *ngIf="i === 0" />
+      </ng-container>
     </dl>
     <p *ngFor="let personality of personalities">
       <b>{{ personality.title }}</b> - {{ personality.description }}

@@ -1,7 +1,7 @@
 <mat-card [class.selected]="isSelected" (dblclick)="onDoubleClick()">
   <img
     mat-card-image
-    [src]="'http://localhost:8000/images/' + imgPath"
+    [src]="'https://personality-assessment-api.onrender.com/images/' + imgPath"
     *ngIf="imgPath"
   />
   <mat-card-header *ngIf="title">

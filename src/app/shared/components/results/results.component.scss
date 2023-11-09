@@ -12,7 +12,7 @@
     align-items: center;
   }
   .results_wrapper {
-    max-width: globals.pxToRem(750);
+    max-width: globals.pxToRem(1500);
     margin: 0 globals.pxToRem(50) globals.pxToRem(50) globals.pxToRem(50);
 
     @media screen and (max-width: 500px) {
@@ -61,12 +61,18 @@
           margin-bottom: globals.pxToRem(25);
         }
       }
+
+      hr {
+        margin-top: globals.pxToRem(15);
+        margin-bottom: globals.pxToRem(15);
+        width: 100%;
+      }
     }
 
     p {
-      @include globals.fontSizing(18, 22);
+      @include globals.fontSizing(20, 26);
       @media screen and (max-width: 600px) {
-        @include globals.fontSizing(16, 20);
+        @include globals.fontSizing(18, 24);
       }
 
       & + p {

@@ -1,6 +1,4 @@
-export const BACKEND_URL = 'http://localhost:8000';
-
-export const DEFAULT_USER_PARAMS = { userName: '', password: '' };
+export const BACKEND_URL = 'https://personality-assessment-api.onrender.com';
 
 export const DEFAULT_RESULTS = {
   r1: { minValue: 0, timesChosen: 0 },

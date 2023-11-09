@@ -11,21 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 // Components & Directives
 import { LoaderComponent } from './components/loader/loader.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { ShowPasswordDirective } from './directives/show-password/show-password.directive';
 import { DisclaimerComponent } from './components/disclaimer/disclaimer.component';
-import { ThanksComponent } from './components/thanks/thanks.component';
-import { LoginComponent } from './components/login/login.component';
 import { ResultsComponent } from './components/results/results.component';
 
-const components = [
-  LoaderComponent,
-  SignupComponent,
-  DisclaimerComponent,
-  ThanksComponent,
-  LoginComponent,
-  ResultsComponent,
-];
+const components = [LoaderComponent, DisclaimerComponent, ResultsComponent];
 
 const materialModules = [
   MatProgressSpinnerModule,
@@ -36,7 +25,7 @@ const materialModules = [
 ];
 
 @NgModule({
-  declarations: [components, ShowPasswordDirective],
+  declarations: [components],
   imports: [CommonModule, materialModules, FormsModule, ReactiveFormsModule],
   exports: [components, materialModules, CommonModule],
 })

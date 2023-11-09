@@ -21,8 +21,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: baseline;
-    max-width: globals.pxToRem(1307);
+    align-items: stretch;
+    max-width: globals.pxToRem(1600);
     width: 86%;
     gap: globals.pxToRem(15);
     margin-bottom: globals.pxToRem(30);

@@ -1,7 +1,8 @@
 @use "../../../globals.scss" as globals;
 
 mat-card {
-  width: globals.pxToRem(250);
+  width: globals.pxToRem(175);
+  height: 100%;
   cursor: pointer;
   overflow: hidden;
   background: #a3a2a342;
@@ -10,7 +11,6 @@ mat-card {
 
   &.selected {
     opacity: 0.5;
-    // filter: blur(globals.pxToRem(5));
     filter: grayscale(100%);
     box-shadow: none;
     transform: scale(0.7);
@@ -25,5 +25,8 @@ mat-card {
   mat-card-header {
     justify-content: center;
     padding-bottom: globals.pxToRem(16);
+    mat-card-title {
+      @include globals.fontSizing(18, 24);
+    }
   }
 }

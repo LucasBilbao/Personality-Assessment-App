@@ -7,6 +7,7 @@ import { QuizCategoryType } from 'src/app/models/quizCategory.type';
 import { Selections } from 'src/app/models/selections.type';
 import { UserService } from '../user/user.service';
 import { DEFAULT_RESULTS } from 'src/app/utils/constants';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,11 @@ export class QuizService {
   } = DEFAULT_RESULTS;
   private selections!: Selections;
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   public getQuizCollection(
     category: QuizCategoryType
@@ -56,13 +61,22 @@ export class QuizService {
 
     const [firstPersonality, secondPersonality] =
       resultsSortedByValueAndSelectionOrder;
+    debugger;
 
     this.userService.userInfo.personalities = [
-      firstPersonality[0] as PersonalityCodeType,
-      secondPersonality[0] as PersonalityCodeType,
+      {
+        personalityCode: firstPersonality[0] as PersonalityCodeType,
+        coefficient: firstPersonality[1],
+        chosenTimes: firstPersonality[2],
+      },
+      {
+        personalityCode: secondPersonality[0] as PersonalityCodeType,
+        coefficient: secondPersonality[1],
+        chosenTimes: secondPersonality[2],
+      },
     ];
 
-    this.userService.publishUser();
+    this.router.navigate(['/results']);
   }
 
   private resultsGenerator(): void {

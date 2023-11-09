@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserPersonality } from 'src/app/models/userInfo.interface';
 import { UserService } from 'src/app/services/user/user.service';
 import { PersonalitiesStateFacade } from 'src/app/store/facades/personalities.facade';
 
@@ -11,6 +12,8 @@ import { PersonalitiesStateFacade } from 'src/app/store/facades/personalities.fa
 export class ResultsComponent implements OnInit {
   public personalities$ = this.personalitiesFacade.personalities$;
   public isLoading$ = this.personalitiesFacade.isLoading$;
+  public userPersonalities: UserPersonality[] =
+    this.userService.userInfo.personalities;
 
   constructor(
     private personalitiesFacade: PersonalitiesStateFacade,
@@ -19,17 +22,20 @@ export class ResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.userService.userInfo.personalities) {
+    if (this.userService.userInfo.personalities.length === 0) {
+      this.onEnd();
       return;
     }
 
     this.personalitiesFacade.getPersonalities(
-      this.userService.userInfo.personalities
+      Object.values(this.userService.userInfo.personalities).map(
+        (personality) => personality.personalityCode
+      )
     );
   }
 
   onEnd(): void {
-    this.userService.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
+    this.userService.userInfo.personalities = [];
   }
 }

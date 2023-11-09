@@ -1,8 +1,11 @@
 import { PersonalityCodeType } from './personalityCode.type';
 
 export interface UserInfo {
-  id?: string;
-  userName: string;
-  password: string;
-  personalities?: PersonalityCodeType[];
+  personalities: UserPersonality[];
+}
+
+export interface UserPersonality {
+  personalityCode: PersonalityCodeType;
+  coefficient: number;
+  chosenTimes: number;
 }
