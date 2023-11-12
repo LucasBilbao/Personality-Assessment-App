@@ -7,7 +7,7 @@
     <dl>
       <ng-container *ngFor="let personality of personalities; index as i">
         <div>
-          <dt>თქვენი პირველადი ტამპერამენტია:</dt>
+          <dt>თქვენი {{ i === 0 ? "პირველადი" : "მეორადი" }} ტემპერამენტია:</dt>
           <dd>{{ personality.title }}</dd>
         </div>
         <div>
@@ -15,7 +15,7 @@
           <dd>{{ userPersonalities[i].coefficient }}</dd>
         </div>
         <div>
-          <dt>ტამპერამენტი აირჩიეთ:</dt>
+          <dt>ტემპერამენტი აირჩიეთ:</dt>
           <dd>
             {{ userPersonalities[i].chosenTimes
             }}{{ userPersonalities[i].chosenTimes !== 1 ? "-ჯერ" : "-ხელ" }}
