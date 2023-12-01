@@ -61,7 +61,6 @@ export class QuizService {
 
     const [firstPersonality, secondPersonality] =
       resultsSortedByValueAndSelectionOrder;
-    debugger;
 
     this.userService.userInfo.personalities = [
       {
@@ -82,13 +81,17 @@ export class QuizService {
   private resultsGenerator(): void {
     Object.keys(this.results).forEach((pCode) => {
       const resultArr: number[] = [];
-      Object.values(this.selections).forEach((pCodes) => {
+      console.log('here');
+      Object.values(this.selections).forEach((pCodes, index) => {
         const pCodeT = pCode as PersonalityCodeType;
 
         if (!pCodes.includes(pCodeT)) {
           return;
         }
-        resultArr.push(1 / pCodes.length);
+
+        const pCodeIndex = pCodes.indexOf(pCodeT) + 1;
+        const coefficient = (pCodes.length - pCodeIndex + 1) / pCodes.length;
+        resultArr.push(coefficient);
       });
 
       if (resultArr.length === 0) {

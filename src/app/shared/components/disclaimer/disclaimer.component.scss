@@ -3,7 +3,7 @@
 :host {
   @extend %host_placeholder;
   .disclaimer_wrapper {
-    max-width: globals.pxToRem(500);
+    max-width: globals.pxToRem(1000);
     margin: 0 globals.pxToRem(15);
     h2 {
       @include globals.fontSizing(34, 38);
