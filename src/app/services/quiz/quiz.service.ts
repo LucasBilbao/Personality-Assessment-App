@@ -62,6 +62,21 @@ export class QuizService {
     const [firstPersonality, secondPersonality] =
       resultsSortedByValueAndSelectionOrder;
 
+    function getRandomIn(min: number, max: number): number {
+      return Math.random() * (max - min) + min;
+    }
+
+    let coefficient1 = getRandomIn(0.5, 1);
+    let coefficient2 = getRandomIn(0.5, 1);
+
+    while (coefficient1 - coefficient2 <= 0.16) {
+      coefficient1 = getRandomIn(0.5, 1);
+      coefficient2 = getRandomIn(0.5, 1);
+    }
+
+    firstPersonality[1] = coefficient1;
+    secondPersonality[1] = coefficient2;
+
     this.userService.userInfo.personalities = [
       {
         personalityCode: firstPersonality[0] as PersonalityCodeType,
@@ -81,8 +96,7 @@ export class QuizService {
   private resultsGenerator(): void {
     Object.keys(this.results).forEach((pCode) => {
       const resultArr: number[] = [];
-      console.log('here');
-      Object.values(this.selections).forEach((pCodes, index) => {
+      Object.values(this.selections).forEach((pCodes) => {
         const pCodeT = pCode as PersonalityCodeType;
 
         if (!pCodes.includes(pCodeT)) {
